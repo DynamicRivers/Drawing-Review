@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drawing Pack QA Checklist</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .info-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+        .info-grid label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        .info-grid input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+        fieldset {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+            background-color: #fafafa;
+        }
+        legend {
+            font-weight: bold;
+            color: #2980b9;
+            background: #fff;
+            padding: 0 10px;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+        }
+        .check-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+        }
+        .check-item input[type="checkbox"] {
+            margin-top: 5px;
+            margin-right: 15px;
+            transform: scale(1.2);
+            cursor: pointer;
+        }
+        .check-label-container {
+            flex-grow: 1;
+        }
+        .check-label-container label {
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .hint-text {
+            display: block;
+            font-size: 0.9em;
+            color: #444;
+            background-color: #eef7fa;
+            padding: 10px;
+            margin-top: 6px;
+            border-left: 4px solid #3498db;
+            border-radius: 0 4px 4px 0;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+            resize: vertical;
+        }
+        .button-group {
+            text-align: center;
+            margin-top: 20px;
+        }
+        button {
+            background-color: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background 0.3s;
+            margin: 0 10px;
+        }
+        button:hover {
+            background-color: #2980b9;
+        }
+        .ai-btn {
+            background-color: #8e44ad;
+        }
+        .ai-btn:hover {
+            background-color: #732d91;
+        }
+        
+        /* Print Styles - Hides buttons and cleans up layout for PDF/Paper */
+        @media print {
+            body {
+                background-color: #fff;
+                padding: 0;
+            }
+            .container {
+                box-shadow: none;
+                border: none;
+                padding: 0;
+            }
+            .button-group {
+                display: none;
+            }
+            fieldset {
+                page-break-inside: avoid;
+            }
+            .hint-text {
+                background-color: #f9f9f9;
+                border-left: 2px solid #888;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h1>Drawing Pack QA Checklist</h1>
+    
+    <div class="info-grid">
+        <div>
+            <label for="reviewer">Reviewer Name:</label>
+            <input type="text" id="reviewer" placeholder="Enter your name" spellcheck="true">
+        </div>
+        <div>
+            <label for="date">Date of Review:</label>
+            <input type="date" id="date">
+        </div>
+        <div>
+            <label for="projectName">Project Title:</label>
+            <input type="text" id="projectName" placeholder="e.g., Underwood Beck" spellcheck="true">
+        </div>
+        <div>
+            <label for="projectNum">Project Number:</label>
+            <input type="text" id="projectNum" placeholder="e.g., DR-2025-0389">
+        </div>
+    </div>
+
+    <form id="qaForm">
+        <fieldset>
+            <legend>1. Document Control & Title Block</legend>
+            <div class="check-item">
+                <input type="checkbox" id="check1-1">
+                <div class="check-label-container"><label for="check1-1">Project Title, Project Number, and Sheet Title are accurate on all sheets.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check1-2">
+                <div class="check-label-container"><label for="check1-2">Revision number, Date, Author, Checker, and Approver initials are completed.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check1-3">
+                <div class="check-label-container"><label for="check1-3">Map scales are stated clearly (e.g., 1:1500 AT A1 or NTS for sections).</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check1-4">
+                <div class="check-label-container"><label for="check1-4">Page numbers are sequential and correct across the pack.</label></div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>2. Standard Notes & Safety Information</legend>
+            <div class="check-item">
+                <input type="checkbox" id="check2-1">
+                <div class="check-label-container"><label for="check2-1">"Safety, Health and Environmental Information" block is present (Risk assessments, Method statements).</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check2-2">
+                <div class="check-label-container"><label for="check2-2">Warnings regarding working near water, assessing bank stability, and PPE are included.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check2-3">
+                <div class="check-label-container"><label for="check2-3">General notes confirm levels are in mAOD and measurements are in metres.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check2-4">
+                <div class="check-label-container"><label for="check2-4">"Do not scale from this drawing" note is visible.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check2-5">
+                <div class="check-label-container"><label for="check2-5">Note regarding contractor adjusting to local LiDAR datum is included.</label></div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>3. Overviews & Maps</legend>
+            <div class="check-item">
+                <input type="checkbox" id="check3-1">
+                <div class="check-label-container"><label for="check3-1">All proposed features (Scrapes, Flowing Wetlands, Riffles, Culvert Breaks) are clearly labelled with numbering.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check3-2">
+                <div class="check-label-container"><label for="check3-2">Legends are present and accurately reflect the line types and fills used on the sheet.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check3-3">
+                <div class="check-label-container"><label for="check3-3">Services Map highlights utility information (e.g., Overhead Electricity lines) and includes the liability disclaimer.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check3-4">
+                <div class="check-label-container"><label for="check3-4">Public footpaths / Public Rights Of Way are identified and included on the Services Map.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check3-5">
+                <div class="check-label-container"><label for="check3-5">Levels Map accurately shows existing LiDAR levels and proposed excavation bounds.</label></div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>4. Feature Specifications & Sections</legend>
+            <div class="check-item">
+                <input type="checkbox" id="check4-1">
+                <div class="check-label-container"><label for="check4-1">Specification tables are populated with correct OSGB Coordinates, Lengths, and Widths for all features.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check4-2">
+                <div class="check-label-container">
+                    <label for="check4-2">Map levels perfectly match the Specification Table levels across all features.</label>
+                    <div class="hint-text">
+                        <strong>How to check:</strong> Cross-reference the point callouts on the <em>Levels Map</em> with the Specification Tables on the Section Sheets.<br><br>
+                        • <strong>Excavation Depths:</strong> Verify the "EXCAVATE -X.X m" map callout for a feature matches the "MAX CUT DEPTH" in its table (e.g., Scrape 1 should match 0.3-0.5m).<br>
+                        • <strong>Finish Levels:</strong> Ensure AOD targets on the map exactly match the "FINISH LEVEL" columns in the corresponding table (e.g., Riffle 1 levels matching 127.8 m AOD).
+                    </div>
+                </div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check4-3">
+                <div class="check-label-container">
+                    <label for="check4-3">Internal feature levels function correctly (Upstream to Downstream within the same feature).</label>
+                    <div class="hint-text">
+                        <strong>How to check:</strong> Review the four level columns for Riffles (UST Baseline, DST Baseline, UST Finish, DST Finish). Ensure that for any single feature, the downstream (DST) levels are <strong>lower than or equal to</strong> the upstream (UST) levels.
+                    </div>
+                </div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check4-4">
+                <div class="check-label-container">
+                    <label for="check4-4">Feature sequence levels function correctly across the whole site.</label>
+                    <div class="hint-text">
+                        <strong>How to check:</strong> Compare the finish levels of multiple Riffles in series. A downstream feature (e.g., Riffle 2) <strong>cannot have a higher finish level</strong> than the feature immediately upstream of it (e.g., Riffle 1).
+                    </div>
+                </div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check4-5">
+                <div class="check-label-container">
+                    <label for="check4-5">Proposed excavation depths and finish levels are not excessively deep relative to the existing LiDAR datum.</label>
+                    <div class="hint-text">
+                        <strong>How to check:</strong> Review the "MAX CUT DEPTH" in the specification tables or calculate the difference between the existing LiDAR levels and proposed cut levels on the map. Flag any depths that appear excessive (e.g., over 1.5m - 2.0m) to confirm they are intentional and structurally safe.
+                    </div>
+                </div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check4-6">
+                <div class="check-label-container"><label for="check4-6">Long Sections (A-A') and Cross Sections (B-B') are provided for features.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check4-7">
+                <div class="check-label-container"><label for="check4-7">Slope angles (e.g., 30-50 deg, 70-90 deg) are explicitly labelled on section cuts.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check4-8">
+                <div class="check-label-container"><label for="check4-8">Ecological/Restoration notes (e.g., "Vary finished height +/- 100 mm", "Do not smooth bank margin") are included where appropriate.</label></div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>5. Spelling, Grammar & Proofreading</legend>
+            <div class="check-item">
+                <input type="checkbox" id="check5-1">
+                <div class="check-label-container"><label for="check5-1"><strong>Manual Proofread:</strong> Drawing pack notes, labels, and text blocks have been manually read and checked for spelling and grammatical errors.</label></div>
+            </div>
+            <div class="check-item">
+                <input type="checkbox" id="check5-2">
+                <div class="check-label-container"><label for="check5-2"><strong>AI Proofread:</strong> The PDF has been run through an AI tool for a secondary spelling and grammar check.</label></div>
+            </div>
+        </fieldset>
+
+        <fieldset>
+            <legend>6. Additional Comments & Deviations</legend>
+            <textarea id="comments" spellcheck="true" placeholder="Note any missing items, required corrections, or context for un-ticked boxes here... The browser will automatically underline spelling errors."></textarea>
+        </fieldset>
+
+        <div class="button-group">
+            <button type="button" class="ai-btn" onclick="triggerAIProofread()">✨ AI Proofread Helper</button>
+            <button type="button" onclick="window.print()">🖨️ Print / Save as PDF</button>
+            <button type="button" onclick="clearForm()">🔄 Reset Form</button>
+        </div>
+    </form>
+</div>
+
+<script>
+    // Auto-fill today's date on load
+    document.getElementById('date').valueAsDate = new Date();
+
+    function triggerAIProofread() {
+        const message = "As a standalone HTML file, this tool cannot directly upload your PDF to an AI.\n\n" +
+                        "However, you can easily use an AI to proofread the drawings!\n\n" +
+                        "1. Open your preferred AI tool (like Gemini, Claude or ChatGPT) in a new tab.\n" +
+                        "2. Upload your PDF drawing pack.\n" +
+                        "3. Copy and paste this exact prompt:\n\n" +
+                        "\"Please act as a meticulous technical proofreader. Review the text, standard notes, and title blocks in this engineering drawing PDF. Highlight any spelling mistakes, grammatical errors, or awkward phrasing, and suggest corrections.\"\n\n" +
+                        "Once you've made any needed corrections, check off the 'AI Proofread' box above.";
+        alert(message);
+    }
+
+    function clearForm() {
+        if(confirm("Are you sure you want to clear all fields?")) {
+            document.getElementById('qaForm').reset();
+            document.getElementById('reviewer').value = '';
+            document.getElementById('projectName').value = '';
+            document.getElementById('projectNum').value = '';
+            document.getElementById('date').valueAsDate = new Date();
+        }
+    }
+</script>
+
+</body>
+</html>

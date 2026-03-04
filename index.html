@@ -44,6 +44,7 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
+            font-family: inherit;
         }
         fieldset {
             border: 1px solid #ddd;
@@ -90,12 +91,15 @@
         }
         textarea {
             width: 100%;
-            height: 100px;
+            min-height: 100px;
             padding: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            resize: vertical;
+            resize: none; /* Disabled manual resize since it auto-expands now */
+            overflow-y: hidden; /* Hides the scrollbar to force expansion */
+            font-family: inherit;
+            font-size: 1em;
         }
         .button-group {
             text-align: center;
@@ -142,6 +146,10 @@
             .hint-text {
                 background-color: #f9f9f9;
                 border-left: 2px solid #888;
+            }
+            textarea {
+                border: 1px solid #ddd;
+                background-color: transparent;
             }
         }
     </style>
@@ -305,13 +313,13 @@
             </div>
             <div class="check-item">
                 <input type="checkbox" id="check5-2">
-                <div class="check-label-container"><label for="check5-2"><strong>AI Proofread:</strong> The PDF has been run through an AI tool for a secondary spelling and grammar check.</label></div>
+                <div class="check-label-container"><label for="check5-2"><strong>AI Proofread (Optional):</strong> The PDF has been run through an AI tool for a secondary spelling and grammar check.</label></div>
             </div>
         </fieldset>
 
         <fieldset>
             <legend>6. Additional Comments & Deviations</legend>
-            <textarea id="comments" spellcheck="true" placeholder="Note any missing items, required corrections, or context for un-ticked boxes here... The browser will automatically underline spelling errors."></textarea>
+            <textarea id="comments" spellcheck="true" placeholder="Note any missing items, required corrections, or context for un-ticked boxes here... The browser will automatically underline spelling errors." oninput="autoResize(this)"></textarea>
         </fieldset>
 
         <div class="button-group">
@@ -326,10 +334,17 @@
     // Auto-fill today's date on load
     document.getElementById('date').valueAsDate = new Date();
 
+    // Automatically resize the textarea so text isn't hidden when saving to PDF
+    function autoResize(textarea) {
+        textarea.style.height = 'auto'; // Reset height
+        textarea.style.height = (textarea.scrollHeight) + 'px'; // Set to match scroll height
+    }
+
+    // Trigger AI popup instructions
     function triggerAIProofread() {
         const message = "As a standalone HTML file, this tool cannot directly upload your PDF to an AI.\n\n" +
                         "However, you can easily use an AI to proofread the drawings!\n\n" +
-                        "1. Open your preferred AI tool (like Gemini, Claude or ChatGPT) in a new tab.\n" +
+                        "1. Open your preferred AI tool (like Gemini or ChatGPT) in a new tab.\n" +
                         "2. Upload your PDF drawing pack.\n" +
                         "3. Copy and paste this exact prompt:\n\n" +
                         "\"Please act as a meticulous technical proofreader. Review the text, standard notes, and title blocks in this engineering drawing PDF. Highlight any spelling mistakes, grammatical errors, or awkward phrasing, and suggest corrections.\"\n\n" +
@@ -337,6 +352,7 @@
         alert(message);
     }
 
+    // Clear form and reset to default states
     function clearForm() {
         if(confirm("Are you sure you want to clear all fields?")) {
             document.getElementById('qaForm').reset();
@@ -344,10 +360,13 @@
             document.getElementById('projectName').value = '';
             document.getElementById('projectNum').value = '';
             document.getElementById('date').valueAsDate = new Date();
+            
+            // Reset textarea height back to normal
+            const commentsBox = document.getElementById('comments');
+            commentsBox.style.height = 'auto'; 
         }
     }
 </script>
 
 </body>
-
 </html>

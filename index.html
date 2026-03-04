@@ -96,8 +96,8 @@
             border: 1px solid #ccc;
             border-radius: 4px;
             box-sizing: border-box;
-            resize: none; /* Disabled manual resize since it auto-expands now */
-            overflow-y: hidden; /* Hides the scrollbar to force expansion */
+            resize: none; 
+            overflow-y: hidden; 
             font-family: inherit;
             font-size: 1em;
         }
@@ -126,7 +126,7 @@
             background-color: #732d91;
         }
         
-        /* Print Styles - Hides buttons and cleans up layout for PDF/Paper */
+        /* Print Styles */
         @media print {
             body {
                 background-color: #fff;
@@ -150,6 +150,7 @@
             textarea {
                 border: 1px solid #ddd;
                 background-color: transparent;
+                overflow: visible !important;
             }
         }
     </style>
@@ -334,11 +335,21 @@
     // Auto-fill today's date on load
     document.getElementById('date').valueAsDate = new Date();
 
+    const commentsBox = document.getElementById('comments');
+
     // Automatically resize the textarea so text isn't hidden when saving to PDF
     function autoResize(textarea) {
         textarea.style.height = 'auto'; // Reset height
-        textarea.style.height = (textarea.scrollHeight) + 'px'; // Set to match scroll height
+        // Add 10px buffer so the browser's PDF engine doesn't pinch the bottom line
+        textarea.style.height = (textarea.scrollHeight + 10) + 'px'; 
     }
+
+    // Force a resize right before the print dialog opens
+    window.addEventListener('beforeprint', () => {
+        if(commentsBox.value.trim() !== "") {
+            autoResize(commentsBox);
+        }
+    });
 
     // Trigger AI popup instructions
     function triggerAIProofread() {
@@ -362,7 +373,6 @@
             document.getElementById('date').valueAsDate = new Date();
             
             // Reset textarea height back to normal
-            const commentsBox = document.getElementById('comments');
             commentsBox.style.height = 'auto'; 
         }
     }
